@@ -1,4 +1,5 @@
 use algorithms::dijkstra::{Dijkstra, Edge};
+use algorithms::test_data::{TEST_MATRIX, TEST_MATRIX_DISCONNECTED};
 
 #[test]
 fn test_correct_minimum_cost() {
@@ -41,4 +42,46 @@ fn test_correct_minimum_cost() {
     assert_eq!(Dijkstra::shortest_path(&graph, 3, 0), Some(7));
     assert_eq!(Dijkstra::shortest_path(&graph, 0, 4), Some(5));
     assert_eq!(Dijkstra::shortest_path(&graph, 4, 0), None);
+}
+
+#[test]
+fn test_correct_minimum_cost_of_an_adjacent_matrix() {
+    let len = TEST_MATRIX.len();
+    let mut adjacent_list: Vec<Vec<Edge>> = (0..len).map(|_| Vec::new()).collect();
+
+    for i in 0..len {
+        for j in 0..TEST_MATRIX[i].len() {
+            if TEST_MATRIX[i][j] == 0 {
+                continue;
+            }
+
+            adjacent_list[i].push(Edge {
+                node: j,
+                cost: TEST_MATRIX[i][j] as usize,
+            })
+        }
+    }
+
+    assert_eq!(Dijkstra::shortest_path(&adjacent_list, 0, 6), Some(44));
+}
+
+#[test]
+fn test_correct_minimum_cost_of_a_disconnected_adjacent_matrix() {
+    let len = TEST_MATRIX_DISCONNECTED.len();
+    let mut adjacent_list: Vec<Vec<Edge>> = (0..len).map(|_| Vec::new()).collect();
+
+    for i in 0..len {
+        for j in 0..TEST_MATRIX_DISCONNECTED[i].len() {
+            if TEST_MATRIX_DISCONNECTED[i][j] == 0 {
+                continue;
+            }
+
+            adjacent_list[i].push(Edge {
+                node: j,
+                cost: TEST_MATRIX_DISCONNECTED[i][j] as usize,
+            })
+        }
+    }
+
+    assert_eq!(Dijkstra::shortest_path(&adjacent_list, 0, 5), None);
 }
