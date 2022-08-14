@@ -1,0 +1,11 @@
+[package]
+name = "algorithms"
+version = "0.1.0"
+authors = ["Dario Cancelliere <dario.cancelliere@gmail.com>"]
+edition = "2021"
+description = "Most famous algorithms made in Rust"
+
+[lib]
+
+
+[dependencies]
